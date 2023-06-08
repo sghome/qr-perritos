@@ -66,7 +66,7 @@ mascotaForm.addEventListener('submit', (event) => {
 function actualizarSpreadsheet() {
   const datos = mascotas.map((mascota) => [mascota.nombre, mascota.foto]);
   const spreadsheetId = '1ci0SzNtJ1oDMK0e6sHNg8T6AOFV1nnHdmODhFV9Zna0';
-  const range = 'Data!A1:E2';
+  const range = 'Data!A2:E2';
 
   google.script.run.actualizarSpreadsheet(datos, spreadsheetId, range);
 }
