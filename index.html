@@ -20,140 +20,147 @@
     
     <h2>Lista de Mascotas</h2>
     <input type="text" id="busqueda" placeholder="Buscar por nombre">
-<ul id="mascota-list">
-  <!-- Los elementos de la lista de mascotas se agregarán dinámicamente aquí -->
-</ul>
+    <ul id="mascota-list">
+      <!-- Los elementos de la lista de mascotas se agregarán dinámicamente aquí -->
+    </ul>
 
-<div id="popup" class="popup">
-  <span class="close">&times;</span>
-  <div class="popup-content">
-    <div class="card">
-      <div class="card-header">
-        <img id="popup-foto" src="" alt="Foto de la mascota" />
-      </div>
-      <div class="card-body">
-        <h2 id="popup-nombre"></h2>
-        <p class="username">@marianagiraldol96</p>
-        <div class="social-media-list">
-          <a href="#">
-            <i class="fab fa-facebook"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-instagram"></i>
-          </a>
+    <div id="popup" class="popup">
+      <span class="close">&times;</span>
+      <div class="popup-content">
+        <div class="card">
+          <div class="card-header">
+            <img id="popup-foto" src="" alt="Foto de la mascota" />
+          </div>
+          <div class="card-body">
+            <h2 id="popup-nombre"></h2>
+            <p class="username">@marianagiraldol96</p>
+            <div class="social-media-list">
+              <a href="#">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <p class="about">Si haz encontrado a <span id="popup-nombre-span"></span> ayudanos a enviar la información a su dueño</p>
+            <a href="https://api.whatsapp.com/send?phone=573117251078&text=Hola,%20Mari%20encontre%20a%20BELLA" class="btn">Reportar</a>
+          </div>
         </div>
-        <p class="about">Si haz encontrado a <span id="popup-nombre-span"></span> ayudanos a enviar la información a su dueño</p>
-        <a href="https://api.whatsapp.com/send?phone=573117251078&text=Hola,%20Mari%20encontre%20a%20BELLA" class="btn">Reportar</a>
       </div>
     </div>
   </div>
-</div>
 
-    
-    
-    <script src="https://apis.google.com/js/api.js"></script>
-<script>
-  function initClient() {
-    gapi.client.init({
-      clientId: '112977350718566818640',
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      scope: 'https://www.googleapis.com/auth/spreadsheets',
-    }).then(function() {
-      // La biblioteca de Google API Client está lista
-      // Puedes llamar a las funciones para interactuar con el Sheets aquí
-    });
-  }
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    function initClient() {
+      gapi.client.init({
+        apiKey: 'AIzaSyBdvgeq54ephscn03S7pMbMAep069PWBrY',
+        clientId: '112977350718566818640',
+        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+      }).then(function() {
+        // La biblioteca de Google API Client está lista
+        // Puedes llamar a las funciones para interactuar con el Sheets aquí
+      });
+    }
 
-  // Carga la biblioteca de Google API Client
-  gapi.load('client', initClient);
-</script>
+    // Carga la biblioteca de Google API Client
+    gapi.load('client', initClient);
+  </script>
 
-    
-    
-<script>
-  // Datos de ejemplo para la lista de mascotas
-  let mascotas = [];
+  <script>
+    // Datos de ejemplo para la lista de mascotas
+    let mascotas = [];
 
-  // Función para mostrar la lista de mascotas
-  function mostrarMascotas() {
-    const mascotaList = document.getElementById('mascota-list');
-    const busqueda = document.getElementById('busqueda').value.toLowerCase();
-    mascotaList.innerHTML = '';
+    // Función para mostrar la lista de mascotas
+    function mostrarMascotas() {
+      const mascotaList = document.getElementById('mascota-list');
+      const busqueda = document.getElementById('busqueda').value.toLowerCase();
+      mascotaList.innerHTML = '';
 
-    mascotas.forEach((mascota) => {
-      if (mascota.nombre.toLowerCase().includes(busqueda)) {
-        const li = document.createElement('li');
-        const span = document.createElement('span');
-        span.textContent = mascota.nombre;
-        span.addEventListener('click', () => mostrarPopup(mascota));
-        li.appendChild(span);
-        mascotaList.appendChild(li);
+      mascotas.forEach((mascota) => {
+        if (mascota.nombre.toLowerCase().includes(busqueda)) {
+          const li = document.createElement('li');
+          const span = document.createElement('span');
+          span.textContent = mascota.nombre;
+          span.addEventListener('click', () => mostrarPopup(mascota));
+          li.appendChild(span);
+          mascotaList.appendChild(li);
+        }
+      });
+    }
+
+    // Función para mostrar el popup con la imagen y la información de la mascota
+    function mostrarPopup(mascota) {
+      const popup = document.getElementById('popup');
+      const popupFoto = document.getElementById('popup-foto');
+      const popupNombre = document.getElementById('popup-nombre');
+      const popupNombreSpan = document.getElementById('popup-nombre-span');
+      popupFoto.src = mascota.foto;
+      popupNombre.textContent = mascota.nombre;
+      popupNombreSpan.textContent = mascota.nombre;
+      popup.classList.add('show');
+
+      const closeBtn = document.getElementsByClassName('close')[0];
+      closeBtn.addEventListener('click', () => {
+        popup.classList.remove('show');
+      });
+    }
+
+    // Evento para mostrar las mascotas al cargar la página
+    window.addEventListener('DOMContentLoaded', mostrarMascotas);
+
+    // Evento para filtrar las mascotas al escribir en la barra de búsqueda
+    const busquedaInput = document.getElementById('busqueda');
+    busquedaInput.addEventListener('input', mostrarMascotas);
+
+    // Evento para enviar el formulario y crear una nueva mascota
+    const mascotaForm = document.getElementById('mascota-form');
+    mascotaForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const nombreInput = document.getElementById('nombre');
+      const fotoInput = document.getElementById('foto');
+
+      const nombre = nombreInput.value;
+      const foto = URL.createObjectURL(fotoInput.files[0]);
+
+      if (nombre && foto) {
+        const mascota = { nombre, foto };
+        mascotas.push(mascota);
+        nombreInput.value = '';
+        fotoInput.value = '';
+        mostrarMascotas();
+        actualizarSpreadsheet();
       }
     });
-  }
 
-  // Función para mostrar el popup con la imagen y la información de la mascota
-  function mostrarPopup(mascota) {
-    const popup = document.getElementById('popup');
-    const popupFoto = document.getElementById('popup-foto');
-    const popupNombre = document.getElementById('popup-nombre');
-    const popupNombreSpan = document.getElementById('popup-nombre-span');
-    popupFoto.src = mascota.foto;
-    popupNombre.textContent = mascota.nombre;
-    popupNombreSpan.textContent = mascota.nombre;
-    popup.classList.add('show');
+    // Función para actualizar los datos en el Spreadsheet de Google
+    function actualizarSpreadsheet() {
+      const datos = mascotas.map((mascota) => [mascota.nombre, mascota.foto]);
+      const spreadsheetId = '1ci0SzNtJ1oDMK0e6sHNg8T6AOFV1nnHdmODhFV9Zna0';
+      const range = 'Data!C2:D2';
 
-    const closeBtn = document.getElementsByClassName('close')[0];
-    closeBtn.addEventListener('click', () => {
-      popup.classList.remove('show');
-    });
-  }
-
-  // Evento para mostrar las mascotas al cargar la página
-  window.addEventListener('DOMContentLoaded', mostrarMascotas);
-
-  // Evento para filtrar las mascotas al escribir en la barra de búsqueda
-  const busquedaInput = document.getElementById('busqueda');
-  busquedaInput.addEventListener('input', mostrarMascotas);
-
-  // Evento para enviar el formulario y crear una nueva mascota
-  const mascotaForm = document.getElementById('mascota-form');
-  mascotaForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const nombreInput = document.getElementById('nombre');
-    const fotoInput = document.getElementById('foto');
-
-    const nombre = nombreInput.value;
-    const foto = URL.createObjectURL(fotoInput.files[0]);
-
-    if (nombre && foto) {
-      const mascota = { nombre, foto };
-      mascotas.push(mascota);
-      nombreInput.value = '';
-      fotoInput.value = '';
-      mostrarMascotas();
-      actualizarSpreadsheet();
+      gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: 'RAW',
+        values: datos
+      }).then(function(response) {
+        console.log('Datos actualizados en el Spreadsheet:', response.result);
+      }, function(error) {
+        console.error('Error al actualizar los datos en el Spreadsheet:', error.result.error.message);
+      });
     }
-  });
-
-  // Función para actualizar los datos en el Spreadsheet de Google
-  function actualizarSpreadsheet() {
-    const datos = mascotas.map((mascota) => [mascota.nombre, mascota.foto]);
-    const spreadsheetId = '1ci0SzNtJ1oDMK0e6sHNg8T6AOFV1nnHdmODhFV9Zna0';
-    const range = 'Data!C2:D2';
-
-    google.script.run.actualizarSpreadsheet(datos, spreadsheetId, range);
-  }
-</script>
-    </body>
-    </html>
+  </script>
+</body>
+</html>
