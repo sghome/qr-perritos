@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD de Mascotas</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CRUD de Mascotas</h1>
+    <form id="mascota-form">
+      <label for="nombre">Nombre de la mascota:</label>
+      <input type="text" id="nombre" name="nombre">
+      
+      <label for="foto">Foto de la mascota:</label>
+      <input type="file" id="foto" name="foto">
+      
+      <button type="submit">Crear</button>
+    </form>
+    
+    <h2>Lista de Mascotas</h2>
+    <input type="text" id="busqueda" placeholder="Buscar por nombre">
+    <ul id="mascota-list">
+      <!-- Los elementos de la lista de mascotas se agregarán dinámicamente aquí -->
+    </ul>
+    
+    <div id="popup" class="popup">
+      <span class="close">&times;</span>
+      <div class="popup-content">
+        <div class="card">
+          <div class="card-header">
+            <img id="popup-foto" src="" alt="Foto de la mascota" />
+          </div>
+          <div class="card-body">
+            <h2 id="popup-nombre"></h2>
+            <p class="username">@marianagiraldol96</p>
+            <div class="social-media-list">
+              <a href="#">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <p class="about">Si haz encontrado a <span id="popup-nombre-span"></span> ayudanos a enviar la información a su dueño</p>
+            <a href="https://api.whatsapp.com/send?phone=573117251078&text=Hola,%20Mari%20encontre%20a%20BELLA" class="btn">Reportar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
